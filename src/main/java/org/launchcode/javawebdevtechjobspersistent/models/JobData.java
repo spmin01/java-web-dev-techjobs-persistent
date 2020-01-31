@@ -74,13 +74,19 @@ public class JobData {
 
             if (job.getName().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
-            } else if (job.getEmployer().toString().toLowerCase().contains(value.toLowerCase())) {
+            } else if (job.getEmployer().getName().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
-            } else if (job.getSkills().contains(value.toLowerCase())) {
-                results.add(job);
-            } else if (job.toString().toLowerCase().contains(value.toLowerCase())) {
-                results.add(job);
+//            } else if (job.getSkills().contains(value.toLowerCase())) {
+//                results.add(job);
+//            }
+            } else { // check for skill match
+                for(Skill skill : job.getSkills()) {
+                    if(skill.equals(value)) {
+                        results.add(job);
+                    }
+                }
             }
+
 
         }
 
