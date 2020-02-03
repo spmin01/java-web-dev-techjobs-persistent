@@ -47,19 +47,18 @@ public class JobData {
 
     public static String getFieldValue(Job job, String fieldName) {
 
-        String theValue = null;
+        String theValue;
 
-        if (fieldName.equals("employer")) {
+        if (fieldName.equals("name")){
+            theValue = job.getName();
+        } else if (fieldName.equals("employer")){
             theValue = job.getEmployer().toString();
-        } else if (fieldName.equals("skill")) {
-            theValue = "";
-            for (Skill skill : job.getSkills()) {
-                theValue += skill.getName() + " ";
-            }
+        } else {
+            theValue = job.getSkills().toString();
         }
-
         return theValue;
     }
+
 
     /**
      * Search all Job fields for the given term.
@@ -79,12 +78,8 @@ public class JobData {
                 results.add(job);
             } else if (job.getEmployer().getName().toLowerCase().contains(value.toLowerCase())) {
                 results.add(job);
-            } else { // check for skill match
-                for (Skill skill : job.getSkills()) {
-                    if (skill.getName().toLowerCase().contains(value.toLowerCase())) {
-                        results.add(job);
-                    }
-                }
+            } else if (job.getSkills().toString().toLowerCase().contains(value.toLowerCase())) {
+                results.add(job);
             }
         }
 
