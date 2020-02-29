@@ -1,5 +1,7 @@
 package org.launchcode.javawebdevtechjobspersistent.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -15,6 +17,7 @@ public class Employer extends AbstractEntity {
     @Size(min = 3, max = 100, message="Location must be between 3 and 100 characters.")
     private String location;
 
+    @JsonBackReference
     @OneToMany
     @JoinColumn(name = "employer_id")
     private final List<Job> jobs = new ArrayList<>();

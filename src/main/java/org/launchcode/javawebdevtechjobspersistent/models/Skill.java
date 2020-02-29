@@ -1,5 +1,7 @@
 package org.launchcode.javawebdevtechjobspersistent.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
@@ -14,6 +16,7 @@ public class Skill extends AbstractEntity {
     @Size(min = 3, max=255, message="Description must be between 3 and 255 characters")
     private String skillDescription;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "skills")
     private final List<Job> jobs = new ArrayList<>();
 
