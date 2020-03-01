@@ -48,7 +48,8 @@ public class JobController {
 
     @GetMapping("/{id}")
     public ResponseEntity getJobById(@PathVariable("id") int id) {
-        if(jobRepository.findById(id) == null) {
+
+        if(jobRepository.findById(id).isEmpty()) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity(jobRepository.findById(id), HttpStatus.OK);
@@ -62,7 +63,14 @@ public class JobController {
         return jobRepository.save(job);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity putJob(@PathVariable("id") int id, @RequestBody Job job) {
+        if(jobRepository.findById(id).isEmpty()) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
 
+        return new ResponseEntity(jobRepository.save(job), HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteJobById(@PathVariable("id") int id) {
