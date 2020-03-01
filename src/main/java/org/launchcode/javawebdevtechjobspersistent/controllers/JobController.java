@@ -1,14 +1,14 @@
 package org.launchcode.javawebdevtechjobspersistent.controllers;
 
-import org.hibernate.validator.constraints.pl.REGON;
+import org.launchcode.javawebdevtechjobspersistent.models.JobData;
+import org.launchcode.javawebdevtechjobspersistent.models.data.EmployerRepository;
 import org.launchcode.javawebdevtechjobspersistent.models.data.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/jobs")
@@ -16,6 +16,15 @@ public class JobController {
 
     @Autowired
     JobRepository jobRepository;
+
+    @GetMapping
+    public ResponseEntity getJobByEmployer(@RequestParam Optional<String> employer) {
+        if(employer.isPresent()) {
+            return new ResponseEntity(JobData.findByValue(employer.get(), jobRepository.findAll()), HttpStatus.OK);
+        } else {
+            return new ResponseEntity(jobRepository.findAll(), HttpStatus.OK);
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity getJobById(@PathVariable("id") int id) {
