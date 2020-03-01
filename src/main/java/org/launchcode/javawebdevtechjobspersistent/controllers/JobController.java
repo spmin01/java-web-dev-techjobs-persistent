@@ -2,7 +2,6 @@ package org.launchcode.javawebdevtechjobspersistent.controllers;
 
 import org.launchcode.javawebdevtechjobspersistent.models.Job;
 import org.launchcode.javawebdevtechjobspersistent.models.JobData;
-import org.launchcode.javawebdevtechjobspersistent.models.Skill;
 import org.launchcode.javawebdevtechjobspersistent.models.data.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,10 +56,24 @@ public class JobController {
 
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity deleteJobById(@PathVariable("id"), int id) {
-//
-//    }
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Job postJob(@RequestBody Job job) {
+        return jobRepository.save(job);
+    }
+
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteJobById(@PathVariable("id") int id) {
+        Optional<Job> job = jobRepository.findById(id);
+        if(!job.isPresent()) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } else {
+            jobRepository.delete(job.get());
+            return new ResponseEntity(HttpStatus.OK);
+        }
+    }
 
 
 }

@@ -1,7 +1,5 @@
 package org.launchcode.javawebdevtechjobspersistent.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -11,11 +9,9 @@ import java.util.List;
 @Entity
 public class Job extends AbstractEntity {
 
-    @JsonManagedReference
     @ManyToOne
     private Employer employer;
 
-    @JsonManagedReference
     @ManyToMany
     @NotNull(message = "Must include skills!")
     private List<Skill> skills;
