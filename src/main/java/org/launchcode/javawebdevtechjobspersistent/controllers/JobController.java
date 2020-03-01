@@ -20,7 +20,7 @@ public class JobController {
     JobRepository jobRepository;
 
     @GetMapping
-    public ResponseEntity getJobByEmployer(@RequestParam Optional<String> employer, @RequestParam Optional<List<String>> skills) {
+    public ResponseEntity getJob(@RequestParam Optional<String> employer, @RequestParam Optional<List<String>> skills) {
 
         if(employer.isPresent() && !skills.isPresent()) {
             return new ResponseEntity(JobData.findByValue(employer.get(), jobRepository.findAll()), HttpStatus.OK);
